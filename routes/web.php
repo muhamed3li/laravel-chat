@@ -22,19 +22,5 @@ Auth::routes();
 
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('admin/login', [AdminLoginController::class, 'showLoginForm']);
-Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
-
-Route::get('moderator/login', [ModeratorLoginController::class, 'showLoginForm']);
-Route::post('moderator/login', [ModeratorLoginController::class, 'login'])->name('moderator.login');
-
-Route::group(["prefix"=>"admin","middleware"=>"assign.guard:admin,admin/login"],function (){
-    Route::get('dashboard',function (){
-        return view("admin.home");
-    });
-});
-Route::group(["prefix"=>"moderator","middleware"=>"assign.guard:moderator,moderator/login"],function (){
-    Route::get('dashboard',function (){
-        return view("moderator.home");
-    });
-});
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+Route::get('/moderator', [\App\Http\Controllers\ModeratorController::class, 'index'])->name('moderator');
